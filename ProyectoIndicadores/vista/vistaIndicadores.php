@@ -1,5 +1,66 @@
 <?php
-//Puedes poner si existe un post del formulario
+include '../controlador/configBd.php';
+include '../controlador/ControlConexion.php';
+include '../controlador/ControlFuente.php';
+include '../controlador/ControlRepresenVisual.php';
+include '../controlador/ControlResultadoIndicador.php';
+include '../controlador/ControlSentido.php';	
+include '../controlador/ControlTipoIndicador.php';	
+include '../controlador/ControlUnidadMedicion.php';	
+include '../modelo/Fuente.php';
+include '../modelo/RepresenVisual.php';
+include '../modelo/ResultadoIndicador.php';
+include '../modelo/Sentido.php';
+include '../modelo/TipoIndicador.php';
+include '../modelo/UnidadMedicion.php';
+$selectTable="";
+
+if (isset($_POST['selectTable'])) $selectTable = $_POST['selectTable'];
+switch ($selectTable) {
+    case '...':
+        
+        break;
+    case 'Fuente':
+        $objControlFuente = new ControlFuente(null);
+        $arregloFuentes = $objControlFuente->listar();
+        $arregloTabla = $arregloFuentes;
+        //var_dump ($arregloFuentes);
+    break;
+    case 'Representación Visual':
+        $objControlRepresenVisual = new ControlRepresenVisual(null);
+        $arregloRepresenVisuales = $objControlRepresenVisual->listar();
+        $arregloTabla = $arregloRepresenVisuales;
+        //var_dump ($arregloRepresenVisuales);
+    break;    
+    case 'Resultado del Indicador':
+        $objControlResultadoIndicador = new ControlResultadoIndicador(null);
+        $arregloResultadoIndicadores = $objControlResultadoIndicador->listar();
+        $arregloTabla = $arregloResultadoIndicadores;
+        //var_dump ($arregloResultadoIndicadores);
+    break;
+    case 'Sentido':
+        $objControlControlSentido = new ControlSentido(null);
+        $arregloControlSentidos = $objControlControlSentido->listar();
+        $arregloTabla = $arregloControlSentidos;
+        //var_dump ($arregloControlSentidos);
+    break;
+    case 'Tipo de Indicador':
+        $objControlTipoIndicador = new ControlTipoIndicador(null);
+        $arregloTipoIndicadores = $objControlTipoIndicador->listar();
+        $arregloTabla = $arregloTipoIndicadores;
+        //var_dump ($arregloTipoIndicadores);
+    break;
+    case 'Unidad de medicion':
+        $objControlUnidadMedicion = new ControlUnidadMedicion(null);
+        $arregloUnidadMediciones = $objControlUnidadMedicion->listar();
+        $arregloTabla = $arregloUnidadMediciones;
+        //var_dump ($arregloUnidadMediciones);
+    break;
+    default:
+        # code...
+        break;
+}
+
 if(isset($_POST['frmSelectTable'])){
        $miSelect = $_POST['selectTable'];
        
@@ -62,26 +123,24 @@ $(document).ready(function(){
                         </div>
                     </div>
                     <div class="col-sm-9">
-                        <form name="frmConsultarId" action="vista.php" method="get">
+                        <form name="frmConsultarId" action="vista.php" method="post">
                             <div class="filter-group">
                             <label>codigo</label>
                             <input type="text" id="txtIdConsulta" name="txtIdConsulta"class="form-control">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                             </div>
                         </form>
-                        <form name="frmSelectTable" action="vista.php" method="get">
+                        <form name="frmSelectTable" action="vistaIndicadores.php" method="post">
                             <div class="filter-group">
                                 <label>Tabla</label>
-                                <select class="form-control" id="selectTable" name="selectTable">
+                                <select class="form-control" name="selectTable" id="selectTable" name="selectTable">
                                     <option>...</option>
                                     <option>Fuente</option>
                                     <option>Representación Visual</option>
                                     <option>Resultado del Indicador</option>
-                                    <option>Rol</option>
                                     <option>Sentido</option>
                                     <option>Tipo de Indicador</option>
-                                    <option>Unidad de madicion</option>
-                                    <option>Usuario</option>
+                                    <option>Unidad de medicion</option>
                                 </select>
                                 <input type="submit" name="btnConsultarTbl" value="Consultar tabla">
                             </div>
@@ -96,58 +155,29 @@ $(document).ready(function(){
                         <th>#</th>
                         <th>Customer</th>
                         <th>Location</th>
-                        <th>Order Date</th>						
-                        <th>Status</th>						
-                        <th>Net Amount</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="#"><img src="/examples/images/avatar/1.jpg" class="avatar" alt="Avatar"> Michael Holz</a></td>
-                        <td>London</td>
-                        <td>Jun 15, 2017</td>                        
-                        <td><span class="status text-success">&bull;</span> Delivered</td>
-                        <td>$254</td>
-                        <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td><a href="#"><img src="/examples/images/avatar/2.jpg" class="avatar" alt="Avatar"> Paula Wilson</a></td>
-                        <td>Madrid</td>                       
-                        <td>Jun 21, 2017</td>
-                        <td><span class="status text-info">&bull;</span> Shipped</td>
-                        <td>$1,260</td>
-                        <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td><a href="#"><img src="/examples/images/avatar/3.jpg" class="avatar" alt="Avatar"> Antonio Moreno</a></td>
-                        <td>Berlin</td>
-                        <td>Jul 04, 2017</td>
-                        <td><span class="status text-danger">&bull;</span> Cancelled</td>
-                        <td>$350</td>
-                        <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>                        
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td><a href="#"><img src="/examples/images/avatar/4.jpg" class="avatar" alt="Avatar"> Mary Saveley</a></td>
-                        <td>New York</td>
-                        <td>Jul 16, 2017</td>						
-                        <td><span class="status text-warning">&bull;</span> Pending</td>
-                        <td>$1,572</td>
-                        <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td><a href="#"><img src="/examples/images/avatar/5.jpg" class="avatar" alt="Avatar"> Martin Sommer</a></td>
-                        <td>Paris</td>
-                        <td>Aug 04, 2017</td>
-                        <td><span class="status text-success">&bull;</span> Delivered</td>
-                        <td>$580</td>
-                        <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr>
+                <?php
+					for($i = 0; $i < count($arregloTabla); $i++){
+					?>
+						<tr>
+							<td>
+								<span class="custom-checkbox">
+									<input type="checkbox" id="checkbox1" name="options[]" value="1">
+									<label for="checkbox1"></label>
+								</span>
+							</td>
+							<td><?php echo $arregloTabla[$i]->getId();?></td>
+							<td><?php echo $arregloTabla[$i]->getNombre();?></td>
+							<td>
+								<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+								<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+							</td>
+						</tr>
+					<?php
+					}
+					?>
                 </tbody>
             </table>
             <div class="clearfix">

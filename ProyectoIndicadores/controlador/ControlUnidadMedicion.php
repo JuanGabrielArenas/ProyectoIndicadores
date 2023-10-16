@@ -87,7 +87,7 @@
                 while($row = $recordSet->fetch_array(MYSQLI_BOTH)){
                     $objUnidadMedicion = new UnidadMedicion("","");
                     $objUnidadMedicion->setId($row['id']);
-                    $objUnidadMedicion->setNombre($row['descripcion']);
+                    $objUnidadMedicion->setDescripcion($row['descripcion']);
                     $arregloUnidadMediciones[$i] = $objUnidadMedicion;
                     $i++;
                 }

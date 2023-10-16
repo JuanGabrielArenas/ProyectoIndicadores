@@ -93,7 +93,7 @@
                 $arregloResultadoIndicadores = array();
                 $i = 0;
                 while($row = $recordSet->fetch_array(MYSQLI_BOTH)){
-                    $objResultadoIndicador = new ResultadoIndicador("","");
+                    $objResultadoIndicador = new ResultadoIndicador("","","","");
                     $objResultadoIndicador->setId($row['id']);
                     $objResultadoIndicador->setResultado($row['resultado']);
                     $objResultadoIndicador->setFechacalculo($row['fechacalculo']);

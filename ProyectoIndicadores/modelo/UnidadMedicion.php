@@ -1,5 +1,5 @@
 <?php
-  class UnidadMedición{
+  class UnidadMedicion{
   	var $id, $descripcion;
 
   	function __construct($id,$descripcion){
