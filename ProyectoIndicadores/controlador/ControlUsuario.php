@@ -12,7 +12,7 @@
                 $validar = false;
                 $usu = $this->objUsuario->getNomUsuario(); 
                 $con = $this->objUsuario->getContrasena();
-                $comandoSql = "SELECT * FROM tblUsuario WHERE nomUsuario='$usu' AND contrasena='$con'";
+                $comandoSql = "SELECT * FROM usuario WHERE nomUsuario='$usu' AND contrasena='$con'";
                 $objControlConexion = new ControlConexion();
                 $objControlConexion->abrirBd($GLOBALS['serv'], GLOBALS['usua'], $GLOBALS['pass'], $GLOBALS['bdat'], $GLOBALS['port']);
                 $recordSet = $objControlConexion->ejecutarSelect($comandoSql);
