@@ -1,0 +1,55 @@
+<?php
+    class Actor{
+        var $id;
+        var $fkidvariable;
+        var $fkidindicador;
+        var $dato;
+        var $fkemailusuario;
+        var $fechadato;
+
+        function __construct($id,$fkidvariable,$fkidindicador,$dato,$fkemailusuario,$fechadato){
+            $this->id=$id;
+            $this->fkidvariable=$fkidvariable;
+            $this->fkidindicador+$fkidindicador;
+            $this->dato+$dato;
+            $this->fkemailusuario+$fkemailusuario;
+            $this->fechadato+$fechadato;
+        }
+        function setId ($id){
+            $this->id =$id;
+        }
+        function getId (){
+            return $this-> id;
+        }
+        function setFkidvariable ($fkidvariable){
+            $this->fkidvariable =$fkidvariable;
+        }
+        function getFkidvariable (){
+            return $this-> fkidvariable;
+        }
+        function setFkidindicador ($fkidindicador){
+            $this->fkidindicador =$fkidindicador;
+        }
+        function getFkidindicador (){
+            return $this-> fkidindicador;
+        }
+        function setDato ($dato){
+            $this->dato =$dato;
+        }
+        function getDato (){
+            return $this-> dato;
+        }
+        function setFkemailusuario ($fkemailusuario){
+            $this->fkemailusuario =$fkemailusuario;
+        }
+        function getFkemailusuario (){
+            return $this-> fkemailusuario;
+        }
+        function setFechadato ($fechadato){
+            $this->fechadato =$fechadato;
+        }
+        function getFechadato (){
+            return $this-> fechadato;
+        }
+    }
+?>

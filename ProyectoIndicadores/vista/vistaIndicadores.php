@@ -84,13 +84,9 @@ if(isset($_POST['frmSelectTable'])){
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="../vista/js/base.js"></script>
 <style>
 </style>
-<script>
-$(document).ready(function(){
-	$('[data-toggle="tooltip"]').tooltip();
-});
-</script>
 </head>
 <body>
 <div class="container-xl">
@@ -125,9 +121,9 @@ $(document).ready(function(){
                     <div class="col-sm-9">
                         <form name="frmConsultarId" action="vista.php" method="post">
                             <div class="filter-group">
-                            <label>codigo</label>
-                            <input type="text" id="txtIdConsulta" name="txtIdConsulta"class="form-control">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                <label>codigo</label>
+                                <input type="text" id="txtIdConsulta" name="txtIdConsulta"class="form-control">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                             </div>
                         </form>
                         <form name="frmSelectTable" action="vistaIndicadores.php" method="post">
@@ -146,6 +142,10 @@ $(document).ready(function(){
                             </div>
                         </form>
                         <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                        <div class="col-sm-6">
+                            <a href="#crudModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#xE84E;</i> <span>Gestión Indicadores</span></a>
+                            <br>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -196,6 +196,216 @@ $(document).ready(function(){
             </div>
         </div>
     </div>        
-</div>     
+</div>  
+<!-- crud Modal HTML -->
+<div id="crudModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form action="vistaUsuarios.php" method="post">
+				<div class="modal-header">						
+					<h4 class="modal-title">Usuario</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					
+						<div class="container">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#home">Datos de indicador</a>
+							</li>
+							<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#menu1">Fuentes</a>
+							</li>
+                            <li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#menu2">Representación visual</a>
+							</li>
+                            <li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#menu3">Resultado indicador</a>
+							</li>
+                            <li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#menu4">Sentido</a>
+							</li>
+                            <li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#menu5">Tipo indicador</a>
+							</li>
+                            <li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#menu6">Unidad medición</a>
+							</li>
+						</ul>
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div id="home" class="container tab-pane active"><br>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="txtEmail" name="txtEmail" class="form-control" value="<?php echo $ema ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Contraseña</label>
+                                    <input type="text" id="txtContrasena" name="txtContrasena" class="form-control" value="<?php echo $con ?>">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" id="btnGuardar" name="bt" class="btn btn-success" value="Guardar">
+                                    <input type="submit" id="btnConsultar" name="bt" class="btn btn-success" value="Consultar">
+                                    <input type="submit" id="btnModificar" name="bt" class="btn btn-warning" value="Modificar">
+                                    <input type="submit" id="btnBorrar" name="bt" class="btn btn-warning" value="Borrar">
+                                </div>
+                            </div>
+							
+                            <div id="menu1" class="container tab-pane fade"><br>
+                                <div class="container">
+                                    <div class="form-group">
+                                        <label for="combobox1">Fuentes</label>
+                                    <select class="form-control" id="combobox1" name="combobox1">
+                                        <?php for($i=0; $i<count($arregloRoles); $i++){ ?>
+                                        <option value="<?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>">
+                                            <?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
+                                    <br>
+                                        <label for="listbox1">Roles específicos del usuario</label>
+                                    <select multiple class="form-control" id="listbox1" name="listbox1[]">
+                                        
+                                    </select>
+                                    </div>
+                                        <div class="form-group">
+                                            <button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox1', 'listbox1')">Agregar Item</button>
+                                            <button type="button" id="btnRemoverItem" name="bt" class="btn btn-success">Remover Item</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="menu2" class="container tab-pane fade"><br>
+                                <div class="container">
+                                    <div class="form-group">
+                                        <label for="combobox1">Representación visual</label>
+                                    <select class="form-control" id="combobox1" name="combobox1">
+                                        <?php for($i=0; $i<count($arregloRoles); $i++){ ?>
+                                        <option value="<?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>">
+                                            <?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
+                                    <br>
+                                        <label for="listbox1">Roles específicos del usuario</label>
+                                    <select multiple class="form-control" id="listbox1" name="listbox1[]">
+                                        
+                                    </select>
+                                    </div>
+                                        <div class="form-group">
+                                            <button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox1', 'listbox1')">Agregar Item</button>
+                                            <button type="button" id="btnRemoverItem" name="bt" class="btn btn-success">Remover Item</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="menu3" class="container tab-pane fade"><br>
+                                <div class="container">
+                                    <div class="form-group">
+                                        <label for="combobox1">Resultado indicador</label>
+                                    <select class="form-control" id="combobox1" name="combobox1">
+                                        <?php for($i=0; $i<count($arregloRoles); $i++){ ?>
+                                        <option value="<?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>">
+                                            <?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
+                                    <br>
+                                        <label for="listbox1">Roles específicos del usuario</label>
+                                    <select multiple class="form-control" id="listbox1" name="listbox1[]">
+                                        
+                                    </select>
+                                    </div>
+                                        <div class="form-group">
+                                            <button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox1', 'listbox1')">Agregar Item</button>
+                                            <button type="button" id="btnRemoverItem" name="bt" class="btn btn-success">Remover Item</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="menu4" class="container tab-pane fade"><br>
+                                <div class="container">
+                                    <div class="form-group">
+                                        <label for="combobox1">Sentido</label>
+                                    <select class="form-control" id="combobox1" name="combobox1">
+                                        <?php for($i=0; $i<count($arregloRoles); $i++){ ?>
+                                        <option value="<?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>">
+                                            <?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
+                                    <br>
+                                        <label for="listbox1">Roles específicos del usuario</label>
+                                    <select multiple class="form-control" id="listbox1" name="listbox1[]">
+                                        
+                                    </select>
+                                    </div>
+                                        <div class="form-group">
+                                            <button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox1', 'listbox1')">Agregar Item</button>
+                                            <button type="button" id="btnRemoverItem" name="bt" class="btn btn-success">Remover Item</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="menu5" class="container tab-pane fade"><br>
+                                <div class="container">
+                                    <div class="form-group">
+                                        <label for="combobox1">Tipo indicador</label>
+                                    <select class="form-control" id="combobox1" name="combobox1">
+                                        <?php for($i=0; $i<count($arregloRoles); $i++){ ?>
+                                        <option value="<?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>">
+                                            <?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
+                                    <br>
+                                        <label for="listbox1">Roles específicos del usuario</label>
+                                    <select multiple class="form-control" id="listbox1" name="listbox1[]">
+                                        
+                                    </select>
+                                    </div>
+                                        <div class="form-group">
+                                            <button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox1', 'listbox1')">Agregar Item</button>
+                                            <button type="button" id="btnRemoverItem" name="bt" class="btn btn-success">Remover Item</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="menu6" class="container tab-pane fade"><br>
+                                <div class="container">
+                                    <div class="form-group">
+                                        <label for="combobox1">Unidad medición</label>
+                                    <select class="form-control" id="combobox1" name="combobox1">
+                                        <?php for($i=0; $i<count($arregloRoles); $i++){ ?>
+                                        <option value="<?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>">
+                                            <?php echo $arregloRoles[$i]->getId().";". $arregloRoles[$i]->getNombre(); ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
+                                    <br>
+                                        <label for="listbox1">Roles específicos del usuario</label>
+                                    <select multiple class="form-control" id="listbox1" name="listbox1[]">
+                                        
+                                    </select>
+                                    </div>
+                                        <div class="form-group">
+                                            <button type="button" id="btnAgregarItem" name="bt" class="btn btn-success" onclick="agregarItem('combobox1', 'listbox1')">Agregar Item</button>
+                                            <button type="button" id="btnRemoverItem" name="bt" class="btn btn-success">Remover Item</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						</div>				
+									
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+					
+				</div>
+			</form>
+		</div>
+	</div>
+</div>   
 </body>
 </html>
